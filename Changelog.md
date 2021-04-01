@@ -15,6 +15,8 @@
 * `encodeLatin1` now silently truncates any character beyond 255 to incorrect
   characters in the input stream. Use `encodeLatin1'` to recover previous
   functionality.
+* `zipWith` and `zipWithM` now zip elements according to the stream type instead
+  of serially.
 
 ### Breaking changes
 
