@@ -73,9 +73,6 @@ import Prelude hiding (map, repeat, zipWith, errorWithoutStackTrace)
 
 #include "Instances.hs"
 
--- XXX The behaviour would be different when using `USE_STREAMK_ONLY`. Is this
--- OK? We'll need to update the Changelog for this too.
-
 -- $setup
 -- >>> import Control.Concurrent (threadDelay)
 -- >>> :{
@@ -89,14 +86,7 @@ import Prelude hiding (map, repeat, zipWith, errorWithoutStackTrace)
 --
 -- @since 0.4.0
 {-# INLINABLE zipWithM #-}
-zipWithM ::
-    ( IsStream t
-#ifdef USE_STREAMK_ONLY
-    , MonadAsync m
-#else
-    , Monad m
-#endif
-    ) => (a -> b -> m c) -> t m a -> t m b -> t m c
+zipWithM :: (IsStream t, Monad m) => (a -> b -> m c) -> t m a -> t m b -> t m c
 zipWithM f m1 m2 = P.fromStreamS $ S.zipWithM f (P.toStreamS m1) (P.toStreamS m2)
 
 -- | Zip two streams serially using a pure zipping function.
@@ -108,14 +98,7 @@ zipWithM f m1 m2 = P.fromStreamS $ S.zipWithM f (P.toStreamS m1) (P.toStreamS m2
 --
 -- @since 0.1.0
 {-# INLINABLE zipWith #-}
-zipWith ::
-    ( IsStream t
-#ifdef USE_STREAMK_ONLY
-    , MonadAsync m
-#else
-    , Monad m
-#endif
-    ) => (a -> b -> c) -> t m a -> t m b -> t m c
+zipWith :: (IsStream t, Monad m) => (a -> b -> c) -> t m a -> t m b -> t m c
 zipWith f m1 m2 = P.fromStreamS $ S.zipWith f (P.toStreamS m1) (P.toStreamS m2)
 
 ------------------------------------------------------------------------------
