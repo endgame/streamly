@@ -995,7 +995,9 @@ mapMaybe f m = go m
 -- Serial Zipping
 ------------------------------------------------------------------------------
 
--- | Zip two streams serially using a pure zipping function.
+-- XXX We can probably implement zipWith in terms of zipWithM
+-- | Zip two streams serially using a pure zipping function. The zipping
+-- function is applied concurrently for concurrent streams
 --
 -- @since 0.1.0
 {-# INLINABLE zipWith #-}
@@ -1013,7 +1015,8 @@ zipWith f = go
             yield1 = merge
         foldStream (adaptState st) yield1 single1 stp mx
 
--- | Zip two streams serially using a monadic zipping function.
+-- | Zip two streams serially using a monadic zipping function. The zipping
+-- function is applied concurrently for concurrent streams
 --
 -- @since 0.1.0
 {-# INLINABLE zipWithM #-}

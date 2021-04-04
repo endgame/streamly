@@ -15,8 +15,14 @@
 * `encodeLatin1` now silently truncates any character beyond 255 to incorrect
   characters in the input stream. Use `encodeLatin1'` to recover previous
   functionality.
-* `zipWith` and `zipWithM` now zip elements according to the stream type instead
-  of serially.
+* The zipping function is now applied concurrently for concurrent streams. The
+  functions affected are written follows,
+  - `Stream.StreamK.zipWith`
+  - `Stream.StreamK.zipWithM`
+  - `Stream.Zip.zipWith`
+  - `Stream.Zip.zipWithM`
+  - `Stream.IsStream.zipWith`
+  - `Stream.IsStream.zipWithM`
 
 ### Breaking changes
 
