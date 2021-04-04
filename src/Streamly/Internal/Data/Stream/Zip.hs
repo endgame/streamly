@@ -95,7 +95,8 @@ zipWithMSerial ::
 zipWithMSerial f m1 m2 =
     D.fromStreamD $ D.zipWithM f (D.toStreamD m1) (D.toStreamD m2)
 
--- | Zip two streams serially using a pure zipping function.
+-- | Zip two streams serially using a pure zipping function. The zipping
+-- function is applied concurrently for concurrent streams
 --
 -- @
 -- > S.toList $ S.zipWith (+) (S.fromList [1,2,3]) (S.fromList [4,5,6])
